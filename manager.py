@@ -8,15 +8,20 @@ class PwManager():
     def __init__(self):
         pass
 
-    def opendb(self, path):
+    def opendb(self, path, password):
         with open(path, "rb") as f:
-            self.salt = f.read()[0:16]
-            self.db = f.read()[16:]
+            self.content = f.read()
+            dec_salt = self.content[16:136]
+            self.salt = self.content[0:16]
+            if Fernet(self.pw_to_key(password)).decrypt(dec_salt) != self.salt:
+                return
+            self.db = self.content[136:]
 
-    def createdb(self, path):
+    def createdb(self, path, password):
         open(path, "x")
         with open(path, "wb") as f:
-            f.write(urandom(16)) #write salt at the start of file
+            self.salt = urandom(16)
+            f.write(self.salt+Fernet(self.pw_to_key(password)).encrypt(self.salt)) #write salt at the start of file
     
     def pw_to_key(self, password):
         backend = default_backend()
