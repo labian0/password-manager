@@ -9,13 +9,14 @@ class PwManager():
         pass
 
     def opendb(self, path):
-        with open(path, "r") as f:
-            self.salt = f.read[0:16]
+        with open(path, "rb") as f:
+            self.salt = f.read()[0:16]
             self.db = f.read()[16:]
 
     def createdb(self, path):
         open(path, "x")
-        self.opendb(path)
+        with open(path, "wb") as f:
+            f.write(urandom(16)) #write salt at the start of file
     
     def pw_to_key(self, password):
         backend = default_backend()
