@@ -18,9 +18,3 @@ def gen_password(length:int=8,lower=True, upper=True, digits=True):
     for i in range(length):
         pw+=chars[randrange(len(chars))]
     return pw
-
-    
-
-
-password = gen_password(length=16)
-print(password)
