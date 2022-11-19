@@ -28,5 +28,5 @@ class PwManager():
             iterations=100000,
             backend=backend
         )
-        key = base64.urlsafe_b64encode(kdf.derive(bytes(password)))
+        key = base64.urlsafe_b64encode(kdf.derive(bytes(password, "utf-8")))
         return key
