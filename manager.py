@@ -15,7 +15,7 @@ class PwManager():
             self.salt = self.content[0:16]
             if Fernet(self.pw_to_key(password)).decrypt(dec_salt) != self.salt:
                 return
-            self.db = Fernet(self.pw_to_key(password)).decrypt(self.content[136:])
+            self.db = Database(self.content[136:])
 
     def createdb(self, path, password):
         open(path, "x")
@@ -35,3 +35,25 @@ class PwManager():
         )
         key = base64.urlsafe_b64encode(kdf.derive(bytes(password, "utf-8")))
         return key
+
+class Database():
+    def __init__(self, content, isEncr = True):
+        self.content = content
+        self.isEncr = isEncr
+
+    def decr(self, key):
+        self.content = Fernet(key).decrypt(self.content)
+        self.isEncr = False
+
+    def encr(self, key):
+        self.content = Fernet(key).encrypt(self.content)
+        self.isEncr = True
+
+    def add_entry(self):
+        pass
+
+    def del_entry(self):
+        pass
+
+    def edit_entry(self):
+        pass
