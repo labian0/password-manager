@@ -50,11 +50,45 @@ class Database():
         self.content = Fernet(key).encrypt(self.content)
         self.isEncr = True
 
-    def add_entry(self):
-        pass
+    def decomp(self):
+        split = self.content.split("::")
+        self.entries = list()
+        for x in split:
+            x = x.split(":")
+            if not self.entries: #to do: swap this for just finding the id in the contents
+                id = 0
+            else:
+                id = self.entries[-1]["id"] + 1
+            self.entries.append({"id":id,"name":x[0],"email":x[1],"pw":x[2]})
+    
+    def recomp(self):
+        content = "" #reset content as a decompiled updated copy exists in self.entries
+        for x in self.entries:
+            content += f"::{x['id']}:{x['name']}:{x['email']}:{x['pw']}"
+        self.content = content[2:]
 
-    def del_entry(self):
-        pass
+    def add_entry(self, name, email, pw):
+        if not self.entries:
+            id = 0
+        else:
+            id = self.entries[-1]["id"] + 1
+        self.entries.append({"id":id,"name":name,"email":email,"pw":pw})
+        return
 
-    def edit_entry(self):
-        pass
+    def del_entry(self, id):
+        for x in self.entries:
+            if x["id"] == id:
+                self.entries.remove(x)
+                return #there should not be more than 1 match
+            return "no matches"
+
+    def get_entry(self, id):
+        for x in self.entries:
+            if x["id"] == id:
+                return x
+
+    def edit_entry(self, id, new_entry:dict):
+        for i in range(len(self.entries)):
+            if self.entries[i]["id"] == id:
+                self.entries[i] = new_entry
+                return
