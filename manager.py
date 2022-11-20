@@ -15,7 +15,7 @@ class PwManager():
             self.salt = self.content[0:16]
             if Fernet(self.pw_to_key(password)).decrypt(dec_salt) != self.salt:
                 return
-            self.db = self.content[136:]
+            self.db = Fernet(self.pw_to_key(password)).decrypt(self.content[136:])
 
     def createdb(self, path, password):
         open(path, "x")
