@@ -9,6 +9,7 @@ class PwManager():
         pass
 
     def opendb(self, path, password):
+        self.path = path
         with open(path, "rb") as f:
             self.content = f.read()
             dec_salt = self.content[16:136]
@@ -16,7 +17,9 @@ class PwManager():
             if Fernet(self.pw_to_key(password)).decrypt(dec_salt) != self.salt:
                 return
             self.db = Database(self.content[136:])
-            self.db.decr(self.pw_to_key(password))
+            if self.content[136:]:
+                self.db.decr(self.pw_to_key(password))
+            self.db.decomp()
 
     def createdb(self, path, password):
         open(path, "x")
@@ -36,9 +39,24 @@ class PwManager():
         )
         key = base64.urlsafe_b64encode(kdf.derive(bytes(password, "utf-8")))
         return key
+    
+    def savedb(self, password, path=False):
+        if not path:
+            path = self.path #"save" if no path is specified, otherwise "save as"
+        self.db.recomp()
+        self.db.encr(self.pw_to_key(password))
+        with open(self.path, "rb") as f:
+            copy = f.read()
+            if Fernet(self.pw_to_key(password)).decrypt(copy[16:136]) != self.salt: #check if key is correct
+                return #return if the key is wrong
+        self.content = self.content[:136] + self.db.content
+        with open(path,"wb") as f:
+            f.write(self.content)
+        return
 
 class Database():
     def __init__(self, content, isEncr = True):
+        self.entries = list()
         self.content = content
         self.isEncr = isEncr
 
@@ -47,19 +65,16 @@ class Database():
         self.isEncr = False
 
     def encr(self, key):
-        self.content = Fernet(key).encrypt(self.content)
+        self.content = Fernet(key).encrypt(bytes(self.content, "utf-8"))
         self.isEncr = True
 
     def decomp(self):
-        split = self.content.split("::")
-        self.entries = list()
-        for x in split:
-            x = x.split(":")
-            if not self.entries: #to do: swap this for just finding the id in the contents
-                id = 0
-            else:
-                id = self.entries[-1]["id"] + 1
-            self.entries.append({"id":id,"name":x[0],"email":x[1],"pw":x[2]})
+        if self.content:
+            split = self.content.split(b"::")
+            self.entries = list()
+            for x in split:
+                x = x.split(b":")
+                self.entries.append({"id":x[0],"name":x[1],"email":x[2],"pw":x[3]})
     
     def recomp(self):
         content = "" #reset content as a decompiled updated copy exists in self.entries
