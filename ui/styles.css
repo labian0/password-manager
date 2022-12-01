@@ -1,0 +1,12 @@
+/*GLOBAL CSS*/
+body{
+    size: 100%;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    background-color: #030003;
+    color: #990099;
+    font-family: Arial, Helvetica, sans-serif;
+}
+button, a{
+    color: #cc0acc;
+}
