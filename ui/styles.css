@@ -32,6 +32,14 @@ ul{
 #first-page-body *{
     margin: auto;
 }
+#first-page-body h1{
+    position: absolute;
+    text-align: center;
+    right: 50%;
+    transform: translateX(50%);
+    top: 30%;
+    font-size: 350%;
+}
 #first-page-body li:not(:last-child){
     margin-bottom: 7px;
 }
