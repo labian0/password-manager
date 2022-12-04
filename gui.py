@@ -1,27 +1,27 @@
-from tkinter import *
-from manager import PwManager, Database
+import Neutron
 
-root = Tk() #create window
+win = Neutron.Window("Example", size=(1000, 1000), css="ui/styles.css")
+win.display(file="ui/index.html")
 
-man = PwManager()
-path_entry = Entry()
-pw_entry = Entry()
-path_entry.insert(0, "file")
-pw_entry.insert(0, "password")
-button1 = Button(text="create database", command=lambda:man.createdb(path_entry.get(), pw_entry.get()))
-button2 = Button(text="open database", command=lambda:man.opendb(path_entry.get(), pw_entry.get()))
-button3 = Button(text="get entries", command=lambda:label1.config(text=man.db.entries))
-button4 = Button(text="exit", command=lambda:(man.savedb(pw_entry.get()), quit()))
-label1 = Label()
+first_page = win.getElementById("first-page-body")
+main_page = win.getElementById("main-page-body")
 
+def edit_classlist(element, classname, remove=True):
+    classes = element.getAttributes()["className"].split(" ")
+    if classname in classes and remove:
+        classes.remove(classname)
+    elif classname not in classes and remove:
+        print("class not found")
+        return
+    else:
+        classes.append(classname)
+    classes = str().join(classes)
+    element.setAttribute("class", classes)
 
+def changepage():
+    edit_classlist(first_page, "hidden", remove=False)
+    edit_classlist(main_page, "hidden")
 
-path_entry.pack()
-pw_entry.pack()
-button1.pack()
-button2.pack()
-button3.pack()
-label1.pack()
-button4.pack()
+win.getElementById("open-datebase-button").addEventListener("click", Neutron.event(changepage))
 
-root.mainloop() #run
+win.show()
