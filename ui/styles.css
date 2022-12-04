@@ -52,3 +52,25 @@ ul{
 #first-page-body li:not(:last-child){
     margin-bottom: 7px;
 }
+/*MAIN PAGE CSS*/
+#main-page-aside{
+    position: absolute;
+    bottom: 0;
+    top: 0;
+    right: 70%;
+    left: 0;
+}
+#main-page-entries{
+    position: absolute;
+    bottom: 30%;
+    top: 0;
+    left: 30%;
+    right: 0%;
+}
+#main-page-details{
+    position: absolute;
+    bottom: 0;
+    top: 70%;
+    left: 30%;
+    right: 0;
+}
