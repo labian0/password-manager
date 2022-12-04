@@ -26,6 +26,9 @@ ul{
 .blue{
     background-color: blue;
 }
+.hidden{
+    display: none !important;
+}
 
 /*FIRST PAGE CSS*/
 #first-page-body{
