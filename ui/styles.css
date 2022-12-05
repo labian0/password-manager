@@ -14,8 +14,8 @@ button, a{
     color: #cc0acc;
 }
 ul{
-    list-style: none;
-    margin: none;
+    list-style-type: none;
+    padding: 0;
 }
 .red {
     background-color: red;
@@ -63,7 +63,7 @@ ul{
     right: 70%;
     left: 0;
 }
-#main-page-entries{
+#main-page-entries-container{
     position: absolute;
     bottom: 30%;
     top: 0;

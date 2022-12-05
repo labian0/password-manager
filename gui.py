@@ -9,6 +9,7 @@ main_page = win.getElementById("main-page-body")
 file_path_input = win.getElementById("file-path-input")
 password_input = win.getElementById("password-input")
 man = PwManager() #create instance of password manager
+entry_list = win.getElementById("main-page-entries")
 
 def edit_classlist(element, classname, remove=True):
     classes = element.getAttributes()["className"].split(" ")
@@ -26,10 +27,18 @@ def changepage():
     edit_classlist(first_page, "hidden", remove=False)
     edit_classlist(main_page, "hidden")
 
+def display_entries():
+    for x in man.db.entries:
+        name = str(x["name"], "utf-8")
+        email = str(x["email"], "utf-8")
+        pw = str(x["pw"], "utf-8")
+        entry = f"{name}, {email}, {pw}"
+        entry_list.appendChild(f"<li>{entry}</li>")
+
 def opendatabase():
     man.opendb("path", "password")
     changepage()
-    print(man.db.entries)
+    display_entries()
 
 def createandopendatabase():
     man.createdb("path", "password")

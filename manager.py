@@ -107,3 +107,12 @@ class Database():
             if self.entries[i]["id"] == id:
                 self.entries[i] = new_entry
                 return
+
+def cr_ex_db():#create example database
+    man = PwManager()
+    man.createdb("path", "password")
+    man.opendb("path", "password")
+    man.db.add_entry("name1", "email1", "pw1")
+    man.db.add_entry("name2", "email2", "pw2")
+    man.db.add_entry("name3", "email3", "pw3")
+    man.savedb("password")
