@@ -1,6 +1,16 @@
 import Neutron
 from manager import *
 
+win = Neutron.Window("Example", size=(1000, 1000), css="ui/styles.css")
+win.display(file="ui/index.html")
+
+first_page = win.getElementById("first-page-body")
+main_page = win.getElementById("main-page-body")
+file_path_input = win.getElementById("file-path-input")
+password_input = win.getElementById("password-input")
+man = PwManager() #create instance of password manager
+entry_list = win.getElementById("main-page-entries")
+
 def edit_classlist(element, classname, remove=True):
     classes = element.getAttributes()["className"].split(" ")
     if classname in classes and remove:
@@ -34,21 +44,7 @@ def createandopendatabase():
     man.createdb(file_path_input.getAttributes()["value"], password_input.getAttributes()["value"])
     opendatabase()
 
-def main():
-    win = Neutron.Window("Example", size=(1000, 1000), css="ui/styles.css")
-    win.display(file="ui/index.html")
+win.getElementById("open-database-button").addEventListener("click", Neutron.event(opendatabase))
+win.getElementById("new-database-button").addEventListener("click", Neutron.event(createandopendatabase))
 
-    first_page = win.getElementById("first-page-body")
-    main_page = win.getElementById("main-page-body")
-    file_path_input = win.getElementById("file-path-input")
-    password_input = win.getElementById("password-input")
-    man = PwManager() #create instance of password manager
-    entry_list = win.getElementById("main-page-entries")
-
-    win.getElementById("open-database-button").addEventListener("click", Neutron.event(opendatabase))
-    win.getElementById("new-database-button").addEventListener("click", Neutron.event(createandopendatabase))
-
-    win.show()
-
-if __name__ == "__main__":
-    main()
+win.show()
