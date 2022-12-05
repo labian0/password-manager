@@ -36,12 +36,12 @@ def display_entries():
         entry_list.appendChild(f"<li>{entry}</li>")
 
 def opendatabase():
-    man.opendb("path", "password")
+    man.opendb(file_path_input.getAttributes()["value"], password_input.getAttributes()["value"])
     changepage()
     display_entries()
 
 def createandopendatabase():
-    man.createdb("path", "password")
+    man.createdb(file_path_input.getAttributes()["value"], password_input.getAttributes()["value"])
     opendatabase()
 
 win.getElementById("open-database-button").addEventListener("click", Neutron.event(opendatabase))
