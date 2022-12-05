@@ -22,6 +22,6 @@ def changepage():
     edit_classlist(first_page, "hidden", remove=False)
     edit_classlist(main_page, "hidden")
 
-win.getElementById("open-datebase-button").addEventListener("click", Neutron.event(changepage))
+win.getElementById("open-database-button").addEventListener("click", Neutron.event(changepage))
 
 win.show()
