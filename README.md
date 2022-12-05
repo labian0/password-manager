@@ -1,4 +1,4 @@
 # password-manager
-simple CLI password manager and generator (FOR DEMONSTRATION PURPOSES ONLY)
+simple password manager
 ## WARNING:
-This password manager may use outdated hashing/encrypting functions and is not advised to be used to store actual sensitive information.
+This application is used for demonstration purposes, use at your own risk.
