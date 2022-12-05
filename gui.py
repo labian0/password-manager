@@ -1,10 +1,12 @@
 import Neutron
+import manager
 
 win = Neutron.Window("Example", size=(1000, 1000), css="ui/styles.css")
 win.display(file="ui/index.html")
 
 first_page = win.getElementById("first-page-body")
 main_page = win.getElementById("main-page-body")
+man = manager.PwManager() #create instance of password manager
 
 def edit_classlist(element, classname, remove=True):
     classes = element.getAttributes()["className"].split(" ")
