@@ -2,14 +2,6 @@ import Neutron
 from manager import *
 
 win = Neutron.Window("Example", size=(1000, 1000), css="ui/styles.css")
-win.display(file="ui/index.html")
-
-first_page = win.getElementById("first-page-body")
-main_page = win.getElementById("main-page-body")
-file_path_input = win.getElementById("file-path-input")
-password_input = win.getElementById("password-input")
-man = PwManager() #create instance of password manager
-entry_list = win.getElementById("main-page-entries")
 
 def edit_classlist(element, classname, remove=True):
     classes = element.getAttributes()["className"].split(" ")
@@ -27,6 +19,9 @@ def changepage():
     edit_classlist(first_page, "hidden", remove=False)
     edit_classlist(main_page, "hidden")
 
+def detail_entry(id="0"):
+    print(id)
+
 def display_entries():
     for x in man.db.entries:
         name = str(x["name"], "utf-8")
@@ -34,7 +29,7 @@ def display_entries():
         pw = str(x["pw"], "utf-8")
         id = str(x["id"], "utf-8")
         entry = f"{id}, {name}, {email}, {pw}"
-        entry_list.appendChild(f"<li id=\"entry{id}\">{entry}</li>")
+        entry_list.appendChild(f"<a id=\"entry{id}\" onclick=\"detail_entry(\' + {id} + \')\"><li>{entry}</li></a>")
 
 def opendatabase():
     man.opendb(file_path_input.getAttributes()["value"], password_input.getAttributes()["value"])
@@ -44,6 +39,15 @@ def opendatabase():
 def createandopendatabase():
     man.createdb(file_path_input.getAttributes()["value"], password_input.getAttributes()["value"])
     opendatabase()
+
+win.display(file="ui/index.html", pyfunctions=[detail_entry])
+
+first_page = win.getElementById("first-page-body")
+main_page = win.getElementById("main-page-body")
+file_path_input = win.getElementById("file-path-input")
+password_input = win.getElementById("password-input")
+man = PwManager() #create instance of password manager
+entry_list = win.getElementById("main-page-entries")
 
 win.getElementById("open-database-button").addEventListener("click", Neutron.event(opendatabase))
 win.getElementById("new-database-button").addEventListener("click", Neutron.event(createandopendatabase))
