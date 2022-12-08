@@ -32,8 +32,9 @@ def display_entries():
         name = str(x["name"], "utf-8")
         email = str(x["email"], "utf-8")
         pw = str(x["pw"], "utf-8")
-        entry = f"{name}, {email}, {pw}"
-        entry_list.appendChild(f"<li>{entry}</li>")
+        id = str(x["id"], "utf-8")
+        entry = f"{id}, {name}, {email}, {pw}"
+        entry_list.appendChild(f"<li id=\"entry{id}\">{entry}</li>")
 
 def opendatabase():
     man.opendb(file_path_input.getAttributes()["value"], password_input.getAttributes()["value"])
