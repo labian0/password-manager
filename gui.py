@@ -25,11 +25,8 @@ def detail_entry(id=0):
 def display_entries():
     for x in man.db.entries:
         name = str(x["name"], "utf-8")
-        email = str(x["email"], "utf-8")
-        pw = str(x["pw"], "utf-8")
         id = str(x["id"], "utf-8")
-        entry = f"{id}, {name}, {email}, {pw}"
-        entry_list.appendChild(f"<a id=\"entry{id}\" onclick=\"detail_entry(\' + {id} + \')\"><li>{entry}</li></a>")
+        entry_list.appendChild(f"<a id=\"entry{id}\" onclick=\"detail_entry(\' + {id} + \')\"><li>{name.upper()}</li></a>")
 
 def opendatabase():
     man.opendb(file_path_input.getAttributes()["value"], password_input.getAttributes()["value"])
