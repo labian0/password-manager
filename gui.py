@@ -19,8 +19,8 @@ def changepage():
     edit_classlist(first_page, "hidden", remove=False)
     edit_classlist(main_page, "hidden")
 
-def detail_entry(id="0"):
-    print(id)
+def detail_entry(id=0):
+    entry_details.innerHTML = man.db.get_entry(bytes(str(id), "utf-8"))
 
 def display_entries():
     for x in man.db.entries:
@@ -48,6 +48,7 @@ file_path_input = win.getElementById("file-path-input")
 password_input = win.getElementById("password-input")
 man = PwManager() #create instance of password manager
 entry_list = win.getElementById("main-page-entries")
+entry_details = win.getElementById("main-page-details")
 
 win.getElementById("open-database-button").addEventListener("click", Neutron.event(opendatabase))
 win.getElementById("new-database-button").addEventListener("click", Neutron.event(createandopendatabase))
