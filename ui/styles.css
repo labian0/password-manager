@@ -77,3 +77,6 @@ ul{
     left: 30%;
     right: 0;
 }
+.selected-entry{
+    background: white;
+}

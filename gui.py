@@ -12,21 +12,27 @@ def edit_classlist(element, classname, remove=True):
         return
     else:
         classes.append(classname)
-    classes = str().join(classes)
+    classes = " ".join(classes)
     element.setAttribute("class", classes)
 
 def changepage():
     edit_classlist(first_page, "hidden", remove=False)
     edit_classlist(main_page, "hidden")
 
-def detail_entry(id=0):
-    entry_details.innerHTML = man.db.get_entry(bytes(str(id), "utf-8"))
+def click_entry(id=0):
+    global selected_entry
+    id = str(id)
+    entry_details.innerHTML = man.db.get_entry(bytes(id, "utf-8"))
+    if selected_entry:
+        edit_classlist(win.getElementById(selected_entry), "selected-entry", remove=True) #remove "selected-entry" class from previously selected entry
+    edit_classlist(win.getElementById(f"entry{id}"), "selected-entry", remove=False)
+    selected_entry = f"entry{id}"
 
 def display_entries():
     for x in man.db.entries:
         name = str(x["name"], "utf-8")
         id = str(x["id"], "utf-8")
-        entry_list.appendChild(f"<li id=\"entry{id}\" onclick=\"detail_entry(\' + {id} + \')\">{name.upper()}</li>")
+        entry_list.appendChild(f"<li id=\"entry{id}\" onclick=\"click_entry(\' + {id} + \')\">{name.upper()}</li>")
 
 def opendatabase():
     man.opendb(file_path_input.getAttributes()["value"], password_input.getAttributes()["value"])
@@ -37,13 +43,14 @@ def createandopendatabase():
     man.createdb(file_path_input.getAttributes()["value"], password_input.getAttributes()["value"])
     opendatabase()
 
-win.display(file="ui/index.html", pyfunctions=[detail_entry])
+win.display(file="ui/index.html", pyfunctions=[click_entry])
 
 first_page = win.getElementById("first-page-body")
 main_page = win.getElementById("main-page-body")
 file_path_input = win.getElementById("file-path-input")
 password_input = win.getElementById("password-input")
 man = PwManager() #create instance of password manager
+selected_entry = str()
 entry_list = win.getElementById("main-page-entries")
 entry_details = win.getElementById("main-page-details")
 
