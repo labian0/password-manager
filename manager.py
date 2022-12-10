@@ -95,7 +95,7 @@ class Database():
             if x["id"] == id:
                 self.entries.remove(x)
                 return #there should not be more than 1 match
-            return "no matches"
+        return "no matches"
 
     def get_entry(self, id):
         for x in self.entries:
