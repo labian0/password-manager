@@ -29,10 +29,20 @@ def click_entry(id=0):
     selected_entry = f"entry{id}"
 
 def display_entries():
+    entry_list.innerHTML_set("") #clear entry list
     for x in man.db.entries:
         name = str(x["name"], "utf-8")
         id = str(x["id"], "utf-8")
         entry_list.appendChild(f"<li id=\"entry{id}\" onclick=\"click_entry(\' + {id} + \')\">{name.upper()}</li>")
+
+def delete_selected_entry():
+    global selected_entry
+    if selected_entry:
+        id = bytes(selected_entry[5:], "utf-8")
+        man.db.del_entry(id)
+        display_entries()
+        print(id, man.db.entries, entry_list.innerHTML)
+        selected_entry = ""
 
 def opendatabase():
     man.opendb(file_path_input.getAttributes()["value"], password_input.getAttributes()["value"])
@@ -56,5 +66,6 @@ entry_details = win.getElementById("main-page-details")
 
 win.getElementById("open-database-button").addEventListener("click", Neutron.event(opendatabase))
 win.getElementById("new-database-button").addEventListener("click", Neutron.event(createandopendatabase))
+win.getElementById("delete-selected-entry-button").addEventListener("click", Neutron.event(delete_selected_entry))
 
 win.show()
