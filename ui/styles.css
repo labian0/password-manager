@@ -80,3 +80,14 @@ ul{
 .selected-entry{
     background: white;
 }
+/*POPUP CSS*/
+#new-entry-popup{
+    position: absolute;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+#new-entry-popup div{
+    text-align: center;
+}

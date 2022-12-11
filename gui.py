@@ -53,6 +53,10 @@ def createandopendatabase():
     man.createdb(file_path_input.getAttributes()["value"], password_input.getAttributes()["value"])
     opendatabase()
 
+def new_entry_popup():
+    edit_classlist(main_page, "hidden", remove=False)
+    edit_classlist(win.getElementById("new-entry-popup"), "hidden", remove=True)
+
 win.display(file="ui/index.html", pyfunctions=[click_entry])
 
 first_page = win.getElementById("first-page-body")
@@ -67,5 +71,6 @@ entry_details = win.getElementById("main-page-details")
 win.getElementById("open-database-button").addEventListener("click", Neutron.event(opendatabase))
 win.getElementById("new-database-button").addEventListener("click", Neutron.event(createandopendatabase))
 win.getElementById("delete-selected-entry-button").addEventListener("click", Neutron.event(delete_selected_entry))
+win.getElementById("create-new-entry-button").addEventListener("click", Neutron.event(new_entry_popup))
 
 win.show()
