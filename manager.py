@@ -74,7 +74,7 @@ class Database():
             self.entries = list()
             for x in split:
                 x = x.split(b":")
-                self.entries.append({"id":x[0],"name":x[1],"email":x[2],"pw":x[3]})
+                self.entries.append({"id":int(x[0]),"name":str(x[1], "utf-8"),"email":str(x[2],"utf-8"),"pw":str(x[3], "utf-8")})
     
     def recomp(self):
         content = "" #reset content as a decompiled updated copy exists in self.entries
