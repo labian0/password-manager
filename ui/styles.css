@@ -101,3 +101,8 @@ ul{
 #password-popup div{
     text-align: center;
 }
+#password-popup-error-msg{
+    color: red;
+    font-size: large;
+    font-weight: bold;
+}
