@@ -91,3 +91,13 @@ ul{
 #new-entry-popup div{
     text-align: center;
 }
+#password-popup{
+    position: absolute;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+#password-popup div{
+    text-align: center;
+}
