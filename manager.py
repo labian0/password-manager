@@ -48,11 +48,11 @@ class PwManager():
         with open(self.path, "rb") as f:
             copy = f.read()
             if Fernet(self.pw_to_key(password)).decrypt(copy[16:136]) != self.salt: #check if key is correct
-                return #return if the key is wrong
+                return False #return False if the key is wrong
         self.content = self.content[:136] + self.db.content
         with open(path,"wb") as f:
             f.write(self.content)
-        return
+        return True #return True if the key is correct and the db was saved correctly
 
 class Database():
     def __init__(self, content, isEncr = True):
