@@ -39,7 +39,6 @@ def delete_selected_entry():
         id = int(selected_entry[5:])
         man.db.del_entry(id)
         display_entries()
-        print(id, man.db.entries, entry_list.innerHTML)
         selected_entry = ""
 
 def add_new_entry():
