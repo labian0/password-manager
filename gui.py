@@ -8,7 +8,6 @@ def edit_classlist(element, classname, remove=True):
     if classname in classes and remove:
         classes.remove(classname)
     elif classname not in classes and remove:
-        print("class not found")
         return
     else:
         classes.append(classname)
@@ -62,6 +61,18 @@ def show_new_entry_popup():
     edit_classlist(main_page, "hidden", remove=False)
     edit_classlist(new_entry_popup, "hidden", remove=True)
 
+def show_password_popup():
+    edit_classlist(main_page, "hidden", remove=False)
+    edit_classlist(password_popup, "hidden", remove=True)
+
+def save_database():
+    if man.savedb(password_popup_input.getAttributes()["value"]):
+        edit_classlist(win.getElementById("password-popup-error-msg"), "hidden", remove=False)
+        edit_classlist(main_page, "hidden", remove=True)
+        edit_classlist(password_popup, "hidden", remove=False)
+    else:
+        edit_classlist(win.getElementById("password-popup-error-msg"), "hidden", remove=True)
+
 win.display(file="ui/index.html", pyfunctions=[click_entry])
 
 first_page = win.getElementById("first-page-body")
@@ -76,11 +87,15 @@ new_entry_popup = win.getElementById("new-entry-popup")
 new_entry_name = win.getElementById("new-entry-name")
 new_entry_email = win.getElementById("new-entry-email")
 new_entry_password = win.getElementById("new-entry-password")
+password_popup = win.getElementById("password-popup")
+password_popup_input = win.getElementById("password-popup-input")
 
 win.getElementById("open-database-button").addEventListener("click", Neutron.event(opendatabase))
 win.getElementById("new-database-button").addEventListener("click", Neutron.event(createandopendatabase))
 win.getElementById("delete-selected-entry-button").addEventListener("click", Neutron.event(delete_selected_entry))
 win.getElementById("create-new-entry-button").addEventListener("click", Neutron.event(show_new_entry_popup))
 win.getElementById("add-entry-button").addEventListener("click", Neutron.event(add_new_entry))
+win.getElementById("password-popup-button").addEventListener("click", Neutron.event(save_database))
+win.getElementById("save-button").addEventListener("click", Neutron.event(show_password_popup))
 
 win.show()
