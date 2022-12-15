@@ -47,7 +47,11 @@ class PwManager():
         self.db.encr(self.pw_to_key(password))
         with open(self.path, "rb") as f:
             copy = f.read()
-            if Fernet(self.pw_to_key(password)).decrypt(copy[16:136]) != self.salt: #check if key is correct
+            try:
+                decr_salt = Fernet(self.pw_to_key(password)).decrypt(copy[16:136])
+            except:
+                return False
+            if decr_salt != self.salt: #check if key is correct
                 return False #return False if the key is wrong
         self.content = self.content[:136] + self.db.content
         with open(path,"wb") as f:
