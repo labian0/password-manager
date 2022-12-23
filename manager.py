@@ -81,10 +81,9 @@ class Database():
                 self.entries.append({"id":int(x[0]),"name":str(x[1], "utf-8").replace("/:", ":"),"email":str(x[2],"utf-8").replace("/:", ":"),"pw":str(x[3], "utf-8").replace("/:", ":")})
     
     def recomp(self):
-        content = "" #reset content as a decompiled updated copy exists in self.entries
+        self.content = "" #reset content as a decompiled updated copy exists in self.entries
         for x in self.entries:
-            content += f":::{x['id']}::{x['name'].replace(':', '/:')}::{x['email'].replace(':', '/:')}::{x['pw'].replace(':', '/:')}"
-        self.content = content[3:]
+            self.content += ":::"*bool(self.content) + f"{x['id']}::{x['name'].replace(':', '/:')}::{x['email'].replace(':', '/:')}::{x['pw'].replace(':', '/:')}"
 
     def add_entry(self, name, email, pw):
         if not self.entries:
